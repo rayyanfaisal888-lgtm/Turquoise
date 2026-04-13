@@ -132,8 +132,9 @@ form.addEventListener('submit', async (e) => {
   };
 
   try {
-    await fetch(ZAPIER_WEBHOOK, {
+    fetch(ZAPIER_WEBHOOK, {
       method:  'POST',
+      mode:    'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload)
     });

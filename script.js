@@ -92,7 +92,7 @@ const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ---------- QUOTE FORM ----------
-const ZAPIER_WEBHOOK = 'YOUR_ZAPIER_WEBHOOK_URL_HERE';
+const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/27153078/u7palin/';
 
 const form       = document.getElementById('quoteForm');
 const submitBtn  = document.getElementById('formSubmit');

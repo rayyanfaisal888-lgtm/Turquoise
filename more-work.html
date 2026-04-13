@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>More Work | Turquoise Flooring Inc.</title>
+  <meta name="description" content="Browse our gallery of completed flooring projects across Calgary — hardwood, tile, vinyl, carpet, and more.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── Page-specific overrides ── */
+    body { background: #f7f4ef; }
+
+    .mw-hero {
+      background: #0d0d0d;
+      padding: 120px 0 60px;
+      text-align: center;
+    }
+    .mw-hero .section-eyebrow { color: var(--turquoise-light); }
+    .mw-hero .section-eyebrow::before { background: var(--turquoise-light); }
+    .mw-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: #fff;
+      margin: 0.5rem 0 1rem;
+      line-height: 1.1;
+    }
+    .mw-hero h1 em { font-style: italic; color: var(--turquoise-light); }
+    .mw-hero p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Gallery ── */
+    .gallery-section {
+      padding: 70px 0 100px;
+      background: #f7f4ef;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+      aspect-ratio: 4 / 3;
+      background: #e0ddd8;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 147, 150, 0.0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease, background 0.3s ease;
+    }
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+      background: rgba(10, 147, 150, 0.18);
+    }
+    .gallery-overlay .material-symbols-outlined {
+      font-size: 2.4rem;
+      color: #fff;
+      background: rgba(0,0,0,0.35);
+      border-radius: 50%;
+      padding: 10px;
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      font-size: 2rem;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-nav:hover { background: rgba(10,147,150,0.5); }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+
+    @media (max-width: 640px) {
+      .gallery-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav id="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <svg class="logo-mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="8" width="34" height="7" rx="1" fill="#0a9396" opacity="0.9"/>
+          <rect x="4" y="18" width="20" height="7" rx="1" fill="#0a9396"/>
+          <rect x="26" y="18" width="12" height="7" rx="1" fill="#94d2bd" opacity="0.7"/>
+          <rect x="4" y="28" width="12" height="7" rx="1" fill="#94d2bd" opacity="0.7"/>
+          <rect x="18" y="28" width="20" height="7" rx="1" fill="#0a9396"/>
+        </svg>
+        <div class="logo-text">
+          <span class="logo-name">Turquoise</span>
+          <span class="logo-sub">Flooring Inc.</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#process">Process</a></li>
+        <li><a href="index.html#testimonials">Reviews</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+        <li><a href="more-work.html" class="nav-active">More Work</a></li>
+      </ul>
+      <a href="tel:4036900046" class="btn-primary nav-cta">
+        <span class="material-symbols-outlined" style="font-size:1.05rem">call</span>
+        (403) 690-0046
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#about">About</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#process">Process</a>
+    <a href="index.html#testimonials">Reviews</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="more-work.html">More Work</a>
+    <a href="tel:4036900046" class="btn-primary">(403) 690-0046</a>
+  </div>
+
+  <!-- ===================== PAGE HERO ===================== -->
+  <section class="mw-hero">
+    <div class="container">
+      <p class="section-eyebrow">Our Portfolio</p>
+      <h1>Work We're <em>Proud Of</em></h1>
+      <p>A look at completed projects across Calgary — every floor installed to the highest standard.</p>
+    </div>
+  </section>
+
+  <!-- ===================== GALLERY ===================== -->
+  <section class="gallery-section">
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="gallery-item" onclick="openLightbox(0)">
+        <img src="images/turquoise-more-work.jpg" alt="Flooring Project 1">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(1)">
+        <img src="images/turquoise-more-work-2.jpg" alt="Flooring Project 2">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(2)">
+        <img src="images/turquoise-more-work-3.jpg" alt="Flooring Project 3">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(3)">
+        <img src="images/turquoise-more-work-4.jpg" alt="Flooring Project 4">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(4)">
+        <img src="images/turquoise-more-work-5.jpg" alt="Flooring Project 5">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(5)">
+        <img src="images/turquoise-more-work-6.jpg" alt="Flooring Project 6">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(6)">
+        <img src="images/turquoise-more-work-7.jpg" alt="Flooring Project 7">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(7)">
+        <img src="images/turquoise-more-work-8.jpg" alt="Flooring Project 8">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(8)">
+        <img src="images/turquoise-more-work-9.jpg" alt="Flooring Project 9">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(9)">
+        <img src="images/turquoise-more-work-10.jpg" alt="Flooring Project 10">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(10)">
+        <img src="images/turquoise-more-work-11.jpg" alt="Flooring Project 11">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox(11)">
+        <img src="images/turquoise-more-work-12.jpg" alt="Flooring Project 12">
+        <div class="gallery-overlay"><span class="material-symbols-outlined">zoom_in</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+    <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)" aria-label="Previous">
+      <span class="material-symbols-outlined">chevron_left</span>
+    </button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)" aria-label="Next">
+      <span class="material-symbols-outlined">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">
+            <svg class="logo-mark" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="34" height="7" rx="1" fill="#0a9396" opacity="0.9"/>
+              <rect x="4" y="18" width="20" height="7" rx="1" fill="#0a9396"/>
+              <rect x="26" y="18" width="12" height="7" rx="1" fill="#94d2bd" opacity="0.7"/>
+              <rect x="4" y="28" width="12" height="7" rx="1" fill="#94d2bd" opacity="0.7"/>
+              <rect x="18" y="28" width="20" height="7" rx="1" fill="#0a9396"/>
+            </svg>
+            <div class="logo-text">
+              <span class="logo-name">Turquoise</span>
+              <span class="logo-sub">Flooring Inc.</span>
+            </div>
+          </a>
+          <p>Premium flooring installation across Calgary and surrounding areas. Every floor installed with precision, pride, and a commitment to quality that outlasts the job.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="index.html#services">Our Services</a></li>
+            <li><a href="index.html#process">Our Process</a></li>
+            <li><a href="index.html#testimonials">Client Reviews</a></li>
+            <li><a href="index.html#contact">Get a Quote</a></li>
+            <li><a href="more-work.html">More Work</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-list">
+            <div class="footer-contact-item">
+              <span class="material-symbols-outlined">call</span>
+              <a href="tel:4036900046">(403) 690-0046</a>
+            </div>
+            <div class="footer-contact-item">
+              <span class="material-symbols-outlined">mail</span>
+              <a href="mailto:kemalnil@gmail.com">kemalnil@gmail.com</a>
+            </div>
+            <div class="footer-contact-item">
+              <span class="material-symbols-outlined">location_on</span>
+              <span>Calgary, AB</span>
+            </div>
+            <div class="footer-contact-item">
+              <span class="material-symbols-outlined">schedule</span>
+              <span>Open 24 / 7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Turquoise Flooring Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile menu ──
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // ── Navbar scroll ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // ── Lightbox ──
+    const images = Array.from(document.querySelectorAll('.gallery-item img'));
+    let current  = 0;
+
+    function openLightbox(index) {
+      current = index;
+      document.getElementById('lightboxImg').src = images[current].src;
+      document.getElementById('lightboxImg').alt = images[current].alt;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function shiftLightbox(dir) {
+      current = (current + dir + images.length) % images.length;
+      document.getElementById('lightboxImg').src = images[current].src;
+      document.getElementById('lightboxImg').alt = images[current].alt;
+    }
+
+    // Close on backdrop click
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeLightbox();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('lightbox').classList.contains('active')) return;
+      if (e.key === 'Escape')      closeLightbox();
+      if (e.key === 'ArrowLeft')   shiftLightbox(-1);
+      if (e.key === 'ArrowRight')  shiftLightbox(1);
+    });
+  </script>
+
+</body>
+</html>
